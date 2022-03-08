@@ -1,39 +1,56 @@
-import java.util.InputMismatchException;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Token {
-    static String allSigns = "abcdefghijklmnopqrstuvwxyz" + "abcdefghijklmnopqrstuvwxyz".toUpperCase() + "0123456789" + "!@#$%^&*()";
+
+    public static List<Integer> allSigns = new ArrayList();
     static Random random = new Random();
-    static int SIZE = allSigns.length();
-    static String TOKEN = "";
+    static String token = "";
 
     public static void main(String[] args) {
-        System.out.println("Enter number of signs in your token");
-        System.out.println("You can enter only 5, 10 or 15");
-        tokenGenerator();
+        fillListWithChars(33, 41);
+        fillListWithChars(64, 90);
+        fillListWithChars(97, 122);
+        pickNumberOfSignsInToken();
     }
 
-    public static String tokenGenerator() {
+    public static void fillListWithChars(int start, int end) {
+        for (int j = start; j <= end; j++) {
+            allSigns.add(j);
+        }
+    }
+
+    public static void pickNumberOfSignsInToken() {
         Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter number of signs in your token. You can choose 5, 10 or 15");
         try {
             int numberOfSigns = scanner.nextInt();
-            if (numberOfSigns == 5 || numberOfSigns == 10 || numberOfSigns == 15) {
-                for (int i = 0; i < numberOfSigns; ++i) {
-                    char sign = allSigns.charAt(random.nextInt(SIZE));
-                    TOKEN = TOKEN += sign;
-                }
-                System.out.println("Your token is: " + TOKEN);
-                return TOKEN;
-            } else {
-                System.out.println("Enter a proper value: 5, 10 or 15");
-                System.out.println("Please try again");
+            switch (numberOfSigns) {
+                case 5:
+                    tokenGenerator(5);
+                    break;
+                case 10:
+                    tokenGenerator(10);
+                    break;
+                case 15:
+                    tokenGenerator(15);
+                    break;
+                default:
+                    System.out.println("Please provide a proper value: 5, 10 or 15. Try again");
+                    pickNumberOfSignsInToken();
             }
-            return tokenGenerator();
         } catch (InputMismatchException e) {
-            System.out.println("You can use integers only, please try again");
-            tokenGenerator();
+            System.out.println("You can use integers only. Try again");
+            pickNumberOfSignsInToken();
         }
-        return TOKEN;
+    }
+
+    public static String tokenGenerator(int numberOfSigns) {
+        for (int i = 0; i < numberOfSigns; i++) {
+            int randomInt = allSigns.get(random.nextInt(allSigns.size()));
+            char randomChar = (char) randomInt;
+            token = randomChar + token;
+        }
+        System.out.println("Your token is " + token);
+        return token;
     }
 }
