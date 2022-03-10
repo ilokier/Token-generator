@@ -1,17 +1,10 @@
 import java.util.*;
 
 public class Token {
-
     public static List<Integer> allSigns = new ArrayList();
     static Random random = new Random();
-    static String token = "";
-
-    public static void main(String[] args) {
-        fillListWithChars(33, 41);
-        fillListWithChars(64, 90);
-        fillListWithChars(97, 122);
-        pickNumberOfSignsInToken();
-    }
+    String tok = "";
+    int numberOfSigns = 0;
 
     public static void fillListWithChars(int start, int end) {
         for (int j = start; j <= end; j++) {
@@ -19,7 +12,7 @@ public class Token {
         }
     }
 
-    public static void pickNumberOfSignsInToken() {
+    public int pickNumberOfSignsInToken() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter number of signs in your token. You can choose 5, 10 or 15");
         try {
@@ -42,15 +35,15 @@ public class Token {
             System.out.println("You can use integers only. Try again");
             pickNumberOfSignsInToken();
         }
+        return numberOfSigns;
     }
 
-    public static String tokenGenerator(int numberOfSigns) {
+    public void tokenGenerator(int numberOfSigns) {
         for (int i = 0; i < numberOfSigns; i++) {
             int randomInt = allSigns.get(random.nextInt(allSigns.size()));
             char randomChar = (char) randomInt;
-            token = randomChar + token;
+            tok = randomChar + tok;
         }
-        System.out.println("Your token is " + token);
-        return token;
+        System.out.println("Your token is " + tok);
     }
 }
